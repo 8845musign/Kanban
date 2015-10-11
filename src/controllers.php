@@ -26,10 +26,12 @@ $app->post('/login', function () use ($app) {
     return $app->redirect('/');
 })->bind('login');
 
+// Board
 $app->get('/board', function(){
     return "Common!";
 });
 
+// Error
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
         return;
