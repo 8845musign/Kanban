@@ -26,6 +26,12 @@ $app->post('/login', function () use ($app) {
     return $app->redirect('/');
 })->bind('login');
 
+// Logout
+$app->get('/logout', function () use ($app) {
+    $app['session']->set('user', null);
+    return $app->redirect('/');
+})->bind('logout');
+
 // Board
 $app->get('/board', function() use($app) {
     return $app['twig']->render('board/index.html');
