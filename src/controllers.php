@@ -8,11 +8,27 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 //Request::setTrustedProxies(array('127.0.0.1'));
 
+// TOP
 $app->get('/', function () use ($app) {
     return $app['twig']->render('index.html', array());
-})
-->bind('homepage')
-;
+})->bind('top');
+
+// Login
+$app->post('/login', function () use ($app) {
+    $username = $app['request']->get('username');
+    $password = $app['request']->get('password');
+
+    if ($username === "test" && $password === "password") {
+        $app['session']->set('user', array('username' => $username));
+        return $app->redirect('/board');
+    }
+
+    return $app->redirect('/');
+})->bind('login');
+
+$app->get('/board', function(){
+    return "Common!";
+});
 
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
