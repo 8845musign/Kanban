@@ -2,16 +2,22 @@
 
 {% block content %}
   <header>
-    <h1>Kanban</h1>
-    <a href="/logout">Logout</a>
+    <nav class="header navbar navbar-default">
+      <h1 class="header__title h5">Kanban</h1>
+      <a class="btn pull-right" href="/logout">Logout</a>
+    </nav>
   </header>
-  <section>
-    <h2>ToDo</h2>
-  </section>
-  <section>
-    <h2>Doing</h2>
-  </section>
-  <section>
-    <h2>Done</h2>
-  </section>
+
+  <div class="row">
+    <section class="col-xs-4">
+      <h2>ToDo</h2>
+    </section>
+    <section class="col-xs-4">
+      <h2>Doing</h2>
+    </section>
+    <section class="col-xs-4">
+      <h2>Done</h2>
+    </section>
+  </div>
+  <!-- /.row -->
 {% endblock %}

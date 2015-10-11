@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <section>
-      <h2>Login</h2>
+    <section class="singin">
+      <h2>Sign in</h2>
       <form action="/login" method="post">
-        <input type="text" name="username" value="">
-        <input type="text" name="password" value="">
-        <button type="submit" name="button">ログイン</button>
+        <label for="username">Username</label>
+        <input id="username" class="form-control" type="text" name="username" value="">
+        <label for="password">Password</label>
+        <input id="password" class="form-control" type="text" name="password" value="">
+        <button class="singin__btn btn btn-block bnt-primary" type="submit" name="button">Sing in</button>
       </form>
     </section>
 {% endblock %}

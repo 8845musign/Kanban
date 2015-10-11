@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.singin {
+  max-width: 320px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.singin__btn {
+  margin-top: 15px;
+}
+
+.header__title {
+  display: inline-block;
+}
