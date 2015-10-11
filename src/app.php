@@ -6,14 +6,16 @@ use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
+use Silex\Provider\SessionServiceProvider;
+use Silex\Provider\HttpFragmentServiceProvider;
 
 $app = new Application();
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new ValidatorServiceProvider());
 $app->register(new ServiceControllerServiceProvider());
 $app->register(new TwigServiceProvider());
-$app->register(new Silex\Provider\SessionServiceProvider());
-$app->register(new Silex\Provider\HttpFragmentServiceProvider());
+$app->register(new SessionServiceProvider());
+$app->register(new HttpFragmentServiceProvider());
 $app['twig'] = $app->share($app->extend('twig', function ($twig, $app) {
     return $twig;
 }));
