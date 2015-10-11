@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON kanban.* TO kanban@"%" IDENTIFIED BY 'password';
+FLUSH PRIVILEGES;
