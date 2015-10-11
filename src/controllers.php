@@ -27,9 +27,9 @@ $app->post('/login', function () use ($app) {
 })->bind('login');
 
 // Board
-$app->get('/board', function(){
-    return "Common!";
-});
+$app->get('/board', function() use($app) {
+    return $app['twig']->render('board/index.html');
+})->bind('board');
 
 // Error
 $app->error(function (\Exception $e, $code) use ($app) {
