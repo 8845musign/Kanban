@@ -18,8 +18,11 @@ $app->post('/login', function () use ($app) {
     $username = $app['request']->get('username');
     $password = $app['request']->get('password');
 
-    if ($username === "test" && $password === "password") {
-        $app['session']->set('user', array('username' => $username));
+    $sql = "SELECT username, mail, created_at, updated_at FROM t_account WHERE username = ? AND password = ?;";
+    $user = $app['db']->fetchAssoc($sql, array($username, $password));
+
+    if ($user) {
+        $app['session']->set('user', $user);
         return $app->redirect('/board');
     }
 
@@ -34,7 +37,8 @@ $app->get('/logout', function () use ($app) {
 
 // Board
 $app->get('/board', function() use($app) {
-    return $app['twig']->render('board/index.html');
+    $user = $app['session']->get('user');
+    return $app['twig']->render('board/index.html', array('username' => $user['username']));
 })->bind('board');
 
 // Error
