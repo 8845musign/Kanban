@@ -14,6 +14,7 @@
   <div class="row">
     <section class="col-xs-4">
       <h2>ToDo</h2>
+      <ul id="todoList"></ul>
     </section>
     <section class="col-xs-4">
       <h2>Doing</h2>
@@ -23,4 +24,77 @@
     </section>
   </div>
   <!-- /.row -->
+
+  <aside>
+    <form id="addTaskForm">
+      <h2>Add Task</h2>
+      <label for="addTaskTitle">Title</label>
+      <input class="form-control" id="addTaskTitle" name="title" type="text">
+      <label for="addTaskDescription">Description</label>
+      <textarea class="form-control" name="description" id="addTaskDescription"></textarea>
+      <div class="row">
+        <div class="col-xs-6"><button class="btn btn-block">Cancel</button></div>
+        <div class="col-xs-6"><button class="btn btn-primary btn-block" type="submit">Add</button></div>
+      </div>
+    </form>
+  </aside>
+
+  <script>
+    $(function(){
+      var task;
+      //Get Task
+      $.get("/task").success(function(json){
+        task = new Task(json);
+        task.draw();
+      }).fail(function(){
+        alert("fail.");
+      });
+
+      //Add Task
+      var $form = $('#addTaskForm');
+      var $title = $form.find('[name=title]');
+      var $description = $form.find('[name=description]');
+      $form.on('submit.addEvent', function(e){
+        e.preventDefault();
+
+        var data = {
+          title: $title.val(),
+          description: $description.val()
+        };
+
+        $.post("/task/add", data).done(function(){
+          task.add([data]);
+          $title.val('');
+          $description.val('');
+        }).fail(function(){
+          alert("fail.");
+        });
+      });
+
+      var Task = function(data){
+        this.$el = $('#todoList');
+        this.data = data;
+      };
+
+      Task.prototype.draw = function () {
+        this.$el[0].innerHTML = "";
+        var fragment = document.createDocumentFragment();
+
+        for (var i = 0, len = this.data.length; i < len; i++) {
+          var $li = $('<li />').html(this.data[i].title + "<br>" + this.data[i].description);
+          fragment.appendChild($li[0]);
+        }
+
+        this.$el[0].appendChild(fragment);
+      };
+
+      Task.prototype.add = function (data) {
+        for (var i = 0, len = data.length; i < len; i++) {
+          this.data.push(data[i]);
+        }
+
+        this.draw();
+      };
+    });
+  </script>
 {% endblock %}
